@@ -121,8 +121,10 @@ int DataMap::sub_iterator(ulong idx, void *buf, size_t bsz) const
     idx += m_ent_cnt;
     const AddrEntry &entry = m_entrys[idx];
     ulong cnt = entry.dsz;
+    if (cnt > idx)
+        cnt = idx;
     DKapture::DataType dt = KEY_DT(entry.hash);
-    long st = idx - cnt;
+    ulong st = idx - cnt;
     DEBUG(0, "sub_iterator st: %lu cnt: %lu bsz: %lu", st, cnt, bsz);
     int ret = 0;
     for (ulong i = st; i < idx; i++)
